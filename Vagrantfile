@@ -8,7 +8,7 @@ Vagrant.configure("2") do |config|
   config.ssh.forward_x11 = true
   config.vm.provider "libvirt" do |libvirt|
     libvirt.cpus = 1
-    libvirt.memory = 512
+    libvirt.memory = 2048
     libvirt.random_hostname = true
     libvirt.graphics_type = "spice"
     libvirt.channel :type => 'spicevmc', :target_name => 'com.redhat.spice.0', :target_type => 'virtio'
