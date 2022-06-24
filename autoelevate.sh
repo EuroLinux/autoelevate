@@ -1,6 +1,4 @@
-#!/bin/bash -x
-
-set -euo pipefail
+#!/bin/bash
 
 distro="invalid"
 valid_distros=( "almalinux" "centos" "eurolinux" "oraclelinux" "rocky" )
