@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-distro=""
+distro="invalid"
 valid_distros=( "almalinux" "centos" "eurolinux" "oraclelinux" "rocky" )
 
 usage() {
