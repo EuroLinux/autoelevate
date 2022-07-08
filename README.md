@@ -2,6 +2,16 @@
 
 Automatically ELevate your CentOS 7 to Enterprise Linux 8
 
+## Usage
+
+An example that ELevates CentOS 7 to EuroLinux 8:
+
+```
+./autoelevate.sh -d eurolinux
+```
+
+If you want to ELevate to another distribution, replace `eurolinux` with the distribution of your choice.
+
 ## Preparations
 
 ### SSH root login
