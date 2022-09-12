@@ -10,9 +10,6 @@ Vagrant.configure("2") do |config|
     libvirt.cpus = 1
     libvirt.memory = 2048
     libvirt.random_hostname = true
-    libvirt.graphics_type = "spice"
-    libvirt.channel :type => 'spicevmc', :target_name => 'com.redhat.spice.0', :target_type => 'virtio'
-    libvirt.redirdev :type => "spicevmc"
     libvirt.uri = 'qemu:///system'
   end
 end
