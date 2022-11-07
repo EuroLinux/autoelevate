@@ -27,20 +27,9 @@ Vagrant.configure("2") do |config|
     i.vm.hostname = "rhel7"
   end
 
-  # Make sure to register EuroLinux 7 to EuroMan first
   config.vm.define "eurolinux7" do |i|
     i.vm.box = "eurolinux-vagrant/eurolinux-7"
     i.vm.hostname = "eurolinux7"
-  end
-
-  config.vm.define "scientific7" do |i|
-    i.vm.box = "eurolinux-vagrant/scientific-linux-7"
-    i.vm.hostname = "scientific7"
-  end
-
-  config.vm.define "oracle7" do |i|
-    i.vm.box = "eurolinux-vagrant/oracle-linux-7"
-    i.vm.hostname = "oracle7"
   end
 
 end
