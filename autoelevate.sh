@@ -30,7 +30,7 @@ EOF
   yum install -y leapp-upgrade "leapp-data-${distro}" && \
   leapp preupgrade || \
   echo "Moving on with AutoELevate..." && \
-  rmmod pata_acpi floppy mptbase mptscsih mptspi && \
+  rmmod pata_acpi floppy mptbase mptscsih mptspi || true && \
   echo PermitRootLogin no | tee -a /etc/ssh/sshd_config && \
   sed -i 's@PermitRootLogin yes@PermitRootLogin no@g' /etc/ssh/sshd_config && \
   leapp answer --section remove_pam_pkcs11_module_check.confirm=True && \
