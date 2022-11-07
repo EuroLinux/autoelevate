@@ -15,8 +15,10 @@ usage() {
 }
 
 autoelevate() {
-  # Make sure CentOS Extras repo is available
+  # Grab CentOS GPG keys
   curl "https://vault.centos.org/RPM-GPG-KEY-CentOS-7" > "/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7" && \
+
+  # Make sure CentOS Extras repo is available
   cat > "/etc/yum.repos.d/autoelevate-centos-extras.repo" <<-'EOF'
 [autoelevate-centos-7-extras]
 name=AutoELevate - CentOS 7 Extras
@@ -24,6 +26,19 @@ baseurl=http://mirror.centos.org/centos/7/extras/$basearch/
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 EOF
+
+  # Add CentOS Base repo for unregistered systems behind paywalls
+  if [ -f /usr/bin/subscription-manager ]; then
+    if [ "$(subscription-manager list --consumed | grep 'No consumed subscription pools were found' )"  ] ; then
+      cat > "/etc/yum.repos.d/autoelevate-centos-base.repo" <<-'EOF'
+[autoelevate-centos-7-base]
+name=AutoELevate - CentOS 7 Base
+baseurl=http://mirror.centos.org/centos/7/base/$basearch/
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+EOF
+    fi
+  fi
 
   # First stage
   yum install -y http://repo.almalinux.org/elevate/elevate-release-latest-el7.noarch.rpm && \
