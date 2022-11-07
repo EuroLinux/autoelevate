@@ -38,3 +38,10 @@ Remove an existing SCSI disk device in the VMware virtual machine settings.
 Next, please add an IDE device and point it to an existing virtual disk that was used by the virtual machine - usually this will be the file '\<virtual machine name\>.vmdk'.
 
 After the migration is done and the system boots, you can optionally change the disk device type back to SCSI (or NVMe, which is recommended by VMware software for Enterprise Linux 8).
+
+
+## Troubleshooting
+
+### "Entering emergency mode" after 'upgrade' initramfs
+
+After a successful upgrade, you might get an emergency shell. This is harmless - just reboot your machine.
