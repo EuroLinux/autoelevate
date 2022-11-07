@@ -2,9 +2,17 @@
 
 Automatically ELevate your Enterprise Linux 7 to Enterprise Linux 8
 
+## Support
+
+The following distributions are supported on the x86_64 architecture:
+
+- CentOS 7
+- EuroLinux 7
+- Red Hat Enterprise Linux 7
+
 ## Usage
 
-An example that ELevates Enterprise Linux 7 to EuroLinux 8:
+An example that ELevates a supported system to EuroLinux 8:
 
 ```
 ./autoelevate.sh -d eurolinux
