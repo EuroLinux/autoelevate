@@ -22,9 +22,8 @@ Vagrant.configure("2") do |config|
     i.vm.hostname = "centos7"
   end
 
-  config.vm.define "generic-rhel7" do |i|
+  config.vm.define "rhel7" do |i|
     i.vm.box = "generic/rhel7"
-    i.vm.hostname = "generic-rhel7"
     i.vm.hostname = "rhel7"
   end
 
