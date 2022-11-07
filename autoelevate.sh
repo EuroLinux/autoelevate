@@ -16,8 +16,8 @@ usage() {
 
 autoelevate() {
   # Make sure CentOS Extras repo is available
-  curl "https://vault.centos.org/RPM-GPG-KEY-CentOS-7" > "/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7"
-  cat > "autoelevate-centos-extras.repo" <<-'EOF'
+  curl "https://vault.centos.org/RPM-GPG-KEY-CentOS-7" > "/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7" && \
+  cat > "/etc/yum.repos.d/autoelevate-centos-extras.repo" <<-'EOF'
 [autoelevate-centos-7-extras]
 name=AutoELevate - CentOS 7 Extras
 mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=extras&infra=$infra
