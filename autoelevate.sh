@@ -33,7 +33,7 @@ EOF
       cat > "/etc/yum.repos.d/autoelevate-centos-base.repo" <<-'EOF'
 [autoelevate-centos-7-base]
 name=AutoELevate - CentOS 7 Base
-baseurl=http://mirror.centos.org/centos/7/base/$basearch/
+baseurl=http://mirror.centos.org/centos/7/os/$basearch/
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 EOF
