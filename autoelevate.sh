@@ -30,9 +30,10 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 EOF
 
   # Add CentOS Base repo for unregistered systems behind paywalls
-  if [ $(which subscription-manager) ]; then
-    echo "This system has subscription-manager installed. Checking for consumed subscriptions..."
-    if [ "$(subscription-manager list --consumed | grep 'No consumed subscription pools were found' )"  ] ; then
+  if [ $(which rhn_check) ]; then
+    echo "This system has rhn_check installed. Checking for consumed subscriptions..."
+    rhn_check
+    if [ $? -ne 0 ] ; then
       echo "This system is not registered. Adding CentOS 7 Base repo for AutoELevate..."
       cat > "/etc/yum.repos.d/autoelevate-centos-base.repo" <<-'EOF'
 [autoelevate-centos-7-base]
