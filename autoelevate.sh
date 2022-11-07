@@ -16,9 +16,11 @@ usage() {
 
 autoelevate() {
   # Grab CentOS GPG keys
+  echo "Grabbing CentOS 7 GPG keys..."
   curl "https://vault.centos.org/RPM-GPG-KEY-CentOS-7" > "/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7" && \
 
   # Make sure CentOS Extras repo is available
+  echo "Making sure CentOS Extras repo is available..."
   cat > "/etc/yum.repos.d/autoelevate-centos-extras.repo" <<-'EOF'
 [autoelevate-centos-7-extras]
 name=AutoELevate - CentOS 7 Extras
@@ -28,8 +30,10 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 EOF
 
   # Add CentOS Base repo for unregistered systems behind paywalls
-  if [ -f /usr/bin/subscription-manager ]; then
+  if [ $(which subscription-manager) ]; then
+    echo "This system has subscription-manager installed. Checking for consumed subscriptions..."
     if [ "$(subscription-manager list --consumed | grep 'No consumed subscription pools were found' )"  ] ; then
+      echo "This system is not registered. Adding CentOS 7 Base repo for AutoELevate..."
       cat > "/etc/yum.repos.d/autoelevate-centos-base.repo" <<-'EOF'
 [autoelevate-centos-7-base]
 name=AutoELevate - CentOS 7 Base
