@@ -22,6 +22,11 @@ If you want to ELevate to another distribution, replace `eurolinux` with the dis
 
 ## Preparations
 
+Please make sure that the system you're ELevating from is up to date.
+
+The script covers the basics of several Enterprise Linux installations, but it can't possibly cover every existing non-standard configuration out there.
+Extra precautions have been arranged, but there's always the risk of something going wrong in the process and users are always recommended to make a backup.
+
 ### SSH root login
 
 Make sure that you do not login to your machine as root via SSH. If that's the case, create another identity and use it to login. Then after the migration process is complete, you can enable root login again and delete that identity.
