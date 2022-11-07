@@ -14,6 +14,11 @@ usage() {
     exit 1
 }
 
+unsupported_config() {
+  echo "This configuration is not yet supported for ELevating."
+  exit 1
+}
+
 autoelevate() {
   # Grab CentOS GPG keys
   echo "Grabbing CentOS 7 GPG keys..."
@@ -68,7 +73,11 @@ done
 if [[ "${valid_distros[*]}" =~ "${distro}" ]] && \
    [[ "$(rpm --eval %dist)" =~ ".el7" ]] && \
    [ "$(id -u)" -eq 0 ]; then
-  autoelevate
+   if [ -d /sys/firmware/efi ] && [[ ! "${distro}" =~ "almalinux" ]]; then 
+     unsupported_config
+   else
+     autoelevate
+   fi
 else
   usage
 fi
