@@ -20,6 +20,15 @@ unsupported_config() {
 }
 
 autoelevate() {
+  # Check if distro is supported
+  distro="$(rpm -q --whatprovides /etc/redhat-release)"
+  case "${distro}" in
+    redhat-release*) ;;
+    centos-release* | centos-linux-release*) ;;
+    el-release*|eurolinux-release*) ;;
+    *) echo "${distro}" && unsupported_config ;;
+  esac
+
   # Grab CentOS GPG keys
   echo "Grabbing CentOS 7 GPG keys..."
   curl "https://vault.centos.org/RPM-GPG-KEY-CentOS-7" > "/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7" && \
