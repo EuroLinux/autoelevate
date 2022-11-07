@@ -32,6 +32,16 @@ check_supported_config() {
     echo "Only major version 7 is qualified for ELevating."
     exit 1
   fi
+
+  if [ "$(grep 'fips=1' /proc/cmdline)" ]; then
+    echo "You appear to be running a system in FIPS mode, which is not supported for ELevate. This case requires an individual approach that can be received by contacting our technical department. Please use the medium our sales department provided after a subscription has been purchased."
+    exit 1
+  fi
+
+  if grep -oq 'Secure Boot: enabled' <(bootctl 2>&1) ; then
+    echo "You appear to be running a system with Secure Boot enabled, which is not yet supported for ELevate. Disable it first, then run the script again."
+    exit 1
+  fi
 }
 
 autoelevate() {
