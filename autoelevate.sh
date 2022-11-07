@@ -14,21 +14,27 @@ usage() {
     exit 1
 }
 
-unsupported_config() {
-  echo "This configuration is not yet supported for ELevating."
-  exit 1
-}
-
-autoelevate() {
-  # Check if distro is supported
+check_supported_config() {
   distro="$(rpm -q --whatprovides /etc/redhat-release)"
   case "${distro}" in
     redhat-release*) ;;
     centos-release* | centos-linux-release*) ;;
     el-release*|eurolinux-release*) ;;
-    *) echo "${distro}" && unsupported_config ;;
+    *) echo "Unsupported distribution: ${distro}" ; exit 1 ;;
   esac
 
+  if [ -d /sys/firmware/efi ] && [[ ! "${distro}" =~ "almalinux" ]]; then 
+    echo "An EFI installation is not able to ELevate to ${distro} yet."
+    exit 1
+  fi
+
+  if [[ ! "$(rpm --eval %dist)" =~ ".el7" ]]; then
+    echo "Only major version 7 is qualified for ELevating."
+    exit 1
+  fi
+}
+
+autoelevate() {
   # Grab CentOS GPG keys
   echo "Grabbing CentOS 7 GPG keys..."
   curl "https://vault.centos.org/RPM-GPG-KEY-CentOS-7" > "/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7" && \
@@ -79,14 +85,10 @@ while getopts "d:" option; do
         *) usage ;;
     esac
 done
-if [[ "${valid_distros[*]}" =~ "${distro}" ]] && \
-   [[ "$(rpm --eval %dist)" =~ ".el7" ]] && \
-   [ "$(id -u)" -eq 0 ]; then
-   if [ -d /sys/firmware/efi ] && [[ ! "${distro}" =~ "almalinux" ]]; then 
-     unsupported_config
-   else
-     autoelevate
-   fi
+
+if [[ "${valid_distros[*]}" =~ "${distro}" ]] && [ "$(id -u)" -eq 0 ]; then
+  check_supported_config
+  autoelevate
 else
   usage
 fi
