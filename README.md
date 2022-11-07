@@ -1,10 +1,10 @@
 # autoelevate
 
-Automatically ELevate your CentOS 7 to Enterprise Linux 8
+Automatically ELevate your Enterprise Linux 7 to Enterprise Linux 8
 
 ## Usage
 
-An example that ELevates CentOS 7 to EuroLinux 8:
+An example that ELevates Enterprise Linux 7 to EuroLinux 8:
 
 ```
 ./autoelevate.sh -d eurolinux
