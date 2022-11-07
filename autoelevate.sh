@@ -10,6 +10,7 @@ usage() {
     echo "-d      Distribution to migrate to"
     echo ""
     echo "Valid distributions are: ${valid_distros[@]}"
+    echo "You must run the script as root."
     exit 1
 }
 
@@ -25,16 +26,16 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 EOF
 
   # First stage
-  sudo yum install -y http://repo.almalinux.org/elevate/elevate-release-latest-el7.noarch.rpm && \
-  sudo yum install -y leapp-upgrade "leapp-data-${distro}" && \
-  sudo leapp preupgrade || \
+  yum install -y http://repo.almalinux.org/elevate/elevate-release-latest-el7.noarch.rpm && \
+  yum install -y leapp-upgrade "leapp-data-${distro}" && \
+  leapp preupgrade || \
   echo "Moving on with AutoELevate..." && \
-  sudo rmmod pata_acpi floppy mptbase mptscsih mptspi && \
-  echo PermitRootLogin no | sudo tee -a /etc/ssh/sshd_config && \
-  sudo sed -i 's@PermitRootLogin yes@PermitRootLogin no@g' /etc/ssh/sshd_config && \
-  sudo leapp answer --section remove_pam_pkcs11_module_check.confirm=True && \
-  sudo leapp upgrade && \
-  sudo reboot
+  rmmod pata_acpi floppy mptbase mptscsih mptspi && \
+  echo PermitRootLogin no | tee -a /etc/ssh/sshd_config && \
+  sed -i 's@PermitRootLogin yes@PermitRootLogin no@g' /etc/ssh/sshd_config && \
+  leapp answer --section remove_pam_pkcs11_module_check.confirm=True && \
+  leapp upgrade && \
+  reboot
   # Second stage will continue after reboot
 }
 
@@ -44,7 +45,9 @@ while getopts "d:" option; do
         *) usage ;;
     esac
 done
-if [[ "${valid_distros[*]}" =~ "${distro}" ]] && [[ "$(rpm --eval %dist)" =~ ".el7" ]]; then
+if [[ "${valid_distros[*]}" =~ "${distro}" ]] && \
+   [[ "$(rpm --eval %dist)" =~ ".el7" ]] && \
+   [ "$(id -u)" -eq 0 ]; then
   autoelevate
 else
   usage
