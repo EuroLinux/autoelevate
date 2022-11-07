@@ -15,12 +15,12 @@ usage() {
 }
 
 check_supported_config() {
-  distro="$(rpm -q --whatprovides /etc/redhat-release)"
-  case "${distro}" in
+  whatprovides_distro="$(rpm -q --whatprovides /etc/redhat-release)"
+  case "${whatprovides_distro}" in
     redhat-release*) ;;
     centos-release* | centos-linux-release*) ;;
     el-release*|eurolinux-release*) ;;
-    *) echo "Unsupported distribution: ${distro}" ; exit 1 ;;
+    *) echo "Unsupported distribution: ${whatprovides_distro}" ; exit 1 ;;
   esac
 
   if [ -d /sys/firmware/efi ] && [[ ! "${distro}" =~ "almalinux" ]]; then 
