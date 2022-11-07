@@ -20,7 +20,7 @@ autoelevate() {
   cat > "/etc/yum.repos.d/autoelevate-centos-extras.repo" <<-'EOF'
 [autoelevate-centos-7-extras]
 name=AutoELevate - CentOS 7 Extras
-mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=extras&infra=$infra
+baseurl=http://mirror.centos.org/centos/7/extras/$basearch/
 gpgcheck=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 EOF
