@@ -17,7 +17,6 @@ usage() {
 check_supported_config() {
   whatprovides_distro="$(rpm -q --whatprovides /etc/redhat-release)"
   case "${whatprovides_distro}" in
-    redhat-release*) ;;
     centos-release* | centos-linux-release*) ;;
     el-release*|eurolinux-release*) ;;
     *) echo "Unsupported distribution: ${whatprovides_distro}" ; exit 1 ;;
