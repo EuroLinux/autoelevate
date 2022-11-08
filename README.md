@@ -8,6 +8,7 @@ The following distributions are supported on the x86_64 architecture:
 
 - CentOS 7
 - EuroLinux 7
+- Red Hat Enterprise Linux 7
 
 ## Usage
 

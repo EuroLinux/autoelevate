@@ -17,6 +17,7 @@ usage() {
 check_supported_config() {
   whatprovides_distro="$(rpm -q --whatprovides /etc/redhat-release)"
   case "${whatprovides_distro}" in
+    redhat-release*) ;;
     centos-release* | centos-linux-release*) ;;
     el-release*|eurolinux-release*) ;;
     *) echo "Unsupported distribution: ${whatprovides_distro}" ; exit 1 ;;
@@ -33,17 +34,22 @@ check_supported_config() {
   fi
 
   if [ "$(grep 'fips=1' /proc/cmdline)" ]; then
-    echo "You appear to be running a system in FIPS mode, which is not supported for ELevate. This case requires an individual approach that can be received by contacting our technical department. Please use the medium our sales department provided after a subscription has been purchased."
+    echo "Systems running in FIPS mode are not qualified for ELevate."
     exit 1
   fi
 
   if grep -oq 'Secure Boot: enabled' <(bootctl 2>&1) ; then
-    echo "You appear to be running a system with Secure Boot enabled, which is not yet supported for ELevate. Disable it first, then run the script again."
+    echo "Disable Secure Boot first, then run this script again."
     exit 1
   fi
 }
 
 autoelevate() {
+  # Disable SELinux
+  echo "Disabling SELinux..."
+  sed -i 's@SELINUX=enforcing@SELINUX=permissive@g' /etc/selinux/config
+  setenforce 0
+
   # Grab CentOS GPG keys
   echo "Grabbing CentOS 7 GPG keys..."
   curl "https://vault.centos.org/RPM-GPG-KEY-CentOS-7" > "/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7" && \
