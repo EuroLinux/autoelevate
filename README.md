@@ -45,3 +45,7 @@ After the migration is done and the system boots, you can optionally change the 
 ### "Entering emergency mode" after 'upgrade' initramfs
 
 After a successful upgrade, you might get an emergency shell. This is harmless - just reboot your machine.
+
+### SELinux has been disabled
+
+The script will disable SELinux - this is required for a successful upgrade.
