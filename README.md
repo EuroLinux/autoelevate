@@ -48,6 +48,4 @@ After a successful upgrade, you might get an emergency shell. This is harmless -
 
 ### SELinux has been disabled
 
-The script will disable SELinux - this is required for a successful upgrade.
-
-Please don't turn it back on. Otherwise you might encounter login issues.
+The script will disable SELinux. Please don't turn it back on. Otherwise you might encounter login issues.
